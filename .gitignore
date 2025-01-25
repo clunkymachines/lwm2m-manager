@@ -1,0 +1,5 @@
+target/
+database.db
+jte-classes/
+.vscode/
+Californium.properties

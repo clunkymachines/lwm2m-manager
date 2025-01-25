@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+	    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="org.eclipse.leshan.core.demo.logback.ColorAwarePatternLayout">
+				<pattern>%gray(%d) %gray(%-20logger{0}) [%highlight(%p)] %m%n</pattern>
+			</layout>
+		</encoder>
+    </appender>
+
+    <root level="WARN">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+    <logger name="org.eclipse.leshan" level="INFO"/>
+    <logger name="org.eclipse.jetty" level="INFO"/>
+    <logger name="org.eclipse.leshan.core.californium.LwM2mCoapResource" level="INFO"/>
+    <logger name="org.eclipse.leshan.server.security.SecurityCheck" level="INFO"/>
+    <logger name="org.eclipse.leshan.core.model.LwM2mModelRepository" level="INFO"/>
+</configuration>
