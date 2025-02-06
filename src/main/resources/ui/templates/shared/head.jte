@@ -3,6 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Device List</title>
     <link rel="stylesheet" href="/css/pico.min.css">
+    <script src="/htmx.min.js"></script>
 <style>
         body {
             margin: 0;

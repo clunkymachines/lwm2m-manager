@@ -6,7 +6,7 @@ import java.util.*;
 import org.eclipse.leshan.servers.security.SecurityInfo;
 
 import com.clunkymachines.lwm2m.manager.model.Device;
-import com.clunkymachines.lwm2m.manager.repository.DeviceRepository;
+import com.clunkymachines.lwm2m.manager.repository.*;
 
 import gg.jte.*;
 import gg.jte.output.PrintWriterOutput;
@@ -49,13 +49,13 @@ public class DevicesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // TODO validation :D
 
-        var endpoint = req.getParameter("endpoint");
+        var endpoint = req.getParameter("lwm2m_endpoint");
         var name = req.getParameter("name");
 
         var psk = req.getParameter("psk");
         var pskid = req.getParameter("pskid");
 
-        // extract SecutrityInfo
+        // extract SecurityInfo
         SecurityInfo securityInfo = null;
         if (psk != null && !psk.isBlank() && pskid != null && !pskid.isBlank()) {
             securityInfo = SecurityInfo.newPreSharedKeyInfo(endpoint, pskid, HexFormat.of().parseHex(psk));
@@ -65,8 +65,13 @@ public class DevicesServlet extends HttpServlet {
 
         var device = new Device(endpoint,name,securityInfo);
 
-        deviceRepository.add(device);
-        // let's render back the list of device
-        resp.sendRedirect("/device");
+        try {
+            deviceRepository.add(device);
+        } catch (UniqueConstraintViolationException e) {
+            resp.setStatus(422);
+            resp.getWriter().print("{\"create-device\":{\""+e.getField().toLowerCase()+"\":\"not unique\"}}");
+            return;
+        }
+        resp.getWriter().println("");
     }
 }

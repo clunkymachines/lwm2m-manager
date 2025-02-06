@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.eclipse.leshan.core.util.Hex;
 import org.eclipse.leshan.servers.security.SecurityInfo;
+import org.sqlite.*;
 
 import com.clunkymachines.lwm2m.manager.model.Device;
 
@@ -79,7 +80,7 @@ public class DeviceRepository {
         return devices;
     }
 
-    public void add(Device device) {
+    public void add(Device device) throws UniqueConstraintViolationException {
         String query = "INSERT INTO device (lwm2m_endpoint, name, dtls_psk_id, dtls_psk, dtls_rpk, dtls_x509) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             Connection conn = dbManager.getConnection();
@@ -93,8 +94,12 @@ public class DeviceRepository {
             }
             stmt.setBoolean(Field.DTLS_X509.field, device.securityInfo().useX509Cert());
             stmt.executeUpdate();
+        } catch (SQLiteException e) {
+            if (e.getResultCode() == SQLiteErrorCode.SQLITE_CONSTRAINT_PRIMARYKEY) {
+                throw new UniqueConstraintViolationException(Field.LWM2M_ENDPOINT.name());
+            }
+            throw new IllegalStateException(e);
         } catch (SQLException e) {
-            // TODO: checked exception for uniqueness which is a normal error
             throw new IllegalStateException(e);
         }
     }

@@ -30,8 +30,6 @@ public class Main {
             webAppContext.setParentLoaderPriority(true);
             httpServer.setHandler(webAppContext);
 
-
-
             DefaultServlet staticServlet = new DefaultServlet();
             ServletHolder staticHolder = new ServletHolder(staticServlet);
             staticHolder.setInitParameter("resourceBase",Main.class.getClassLoader().getResource("ui/static").toExternalForm());
@@ -43,7 +41,6 @@ public class Main {
             var deviceServletHolder = new ServletHolder(new DevicesServlet(deviceRepository));
             webAppContext.addServlet(deviceServletHolder, "/device/*");
             LOG.info("Starting LWM2M server");
-
 
             Lwm2mServer lwm2mServer = new Lwm2mServer(5683, 5684, new SecurityStoreService(deviceRepository));
             lwm2mServer.start();
