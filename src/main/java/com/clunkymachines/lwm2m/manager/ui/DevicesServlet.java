@@ -42,7 +42,6 @@ public class DevicesServlet extends HttpServlet {
                 templateEngine.render("devices.jte", modelMap, new PrintWriterOutput(resp.getWriter()));
             }
         }
-        System.err.println(req.getPathInfo());
     }
 
     @Override

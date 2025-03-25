@@ -4,6 +4,7 @@
     <title>Device List</title>
     <link rel="stylesheet" href="/css/pico.min.css">
     <script src="/htmx.min.js"></script>
+    <script src="/sse.min.js"></script>
 <style>
         body {
             margin: 0;

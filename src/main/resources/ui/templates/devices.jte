@@ -21,7 +21,7 @@
                     <tbody>
                     @for(Device device : devices)
                         <tr>
-                            <td>${device.endpoint()}</td>
+                            <td><a href="../devicedetails?endpoint=${device.endpoint()}">${device.endpoint()}</a></td>
                             <td>${device.name()}</td>
                             <td>${device.securityInfo().getPskIdentity()}</td>
                         </tr>

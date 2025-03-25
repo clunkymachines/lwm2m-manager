@@ -67,4 +67,7 @@ public class Lwm2mServer {
   public void destroy() {
     server.destroy();
   }
+  public LeshanServer getLeshanServer() {
+    return server;
+  }
 }

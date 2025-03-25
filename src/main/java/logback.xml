@@ -17,6 +17,7 @@
   <logger name="com.clunkymachines.lwm2m.manager" level="DEBUG"/>
   <logger name="org.eclipse.leshan" level="INFO"/>
   <logger name="org.eclipse.jetty" level="WARN"/>
+  <logger name="org.eclipse.californium" level="WARN"/>
   <logger name="org.eclipse.leshan.core.californium.LwM2mCoapResource" level="INFO"/>
   <logger name="org.eclipse.leshan.server.security.SecurityCheck" level="INFO"/>
   <logger name="org.eclipse.leshan.core.model.LwM2mModelRepository" level="INFO"/>

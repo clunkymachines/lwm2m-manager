@@ -9,7 +9,7 @@ import org.slf4j.*;
 
 import com.clunkymachines.lwm2m.manager.lwm2m.*;
 import com.clunkymachines.lwm2m.manager.repository.*;
-import com.clunkymachines.lwm2m.manager.ui.DevicesServlet;
+import com.clunkymachines.lwm2m.manager.ui.*;
 
 public class Main {
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
@@ -38,11 +38,14 @@ public class Main {
             staticHolder.setInitParameter("cacheControl", "public, max-age=31536000");
             webAppContext.addServlet(staticHolder, "/*");
 
+            Lwm2mServer lwm2mServer = new Lwm2mServer(5683, 5684, new SecurityStoreService(deviceRepository));
+
             var deviceServletHolder = new ServletHolder(new DevicesServlet(deviceRepository));
             webAppContext.addServlet(deviceServletHolder, "/device/*");
+            var deviceDetailsServletHolder = new ServletHolder(new DeviceDetailsServlet(lwm2mServer.getLeshanServer()));
+            webAppContext.addServlet(deviceDetailsServletHolder, "/devicedetails");
             LOG.info("Starting LWM2M server");
 
-            Lwm2mServer lwm2mServer = new Lwm2mServer(5683, 5684, new SecurityStoreService(deviceRepository));
             lwm2mServer.start();
 
             LOG.info("Starting web server");
