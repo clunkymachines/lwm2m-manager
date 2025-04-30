@@ -14,7 +14,7 @@
 @template.shared.menu()
         <div class="main">
                 <h1>Device Details</h1>
-                <div  hx-ext="sse" sse-connect="/event?ep=${reg.getEndpoint()}"> 
+                <div hx-ext="sse" sse-connect="/event?ep=${reg.getEndpoint()}" sse-swap="${reg.getEndpoint()}"> test </div>
                 @for(var obj : objects)
                   <details>
                     <summary>${obj.name()} ${obj.id()} ${obj.version()}</summary>
@@ -48,7 +48,7 @@
                           @endif
                           </td>
                           <td>
-                              <div sse-swap="${reg.getEndpoint()}/${obj.id()}/${instance.id()}/${resource.id()}"></div>
+                              <div id="value-${reg.getEndpoint()}-${obj.id()}-${instance.id()}-${resource.id()}"></div>
                           </td>
                         </tr>
                         @endfor
@@ -58,7 +58,6 @@
                   </details>
                   <hr />
                 @endfor
-                </div>
         </div>
     </div>
 </body>
