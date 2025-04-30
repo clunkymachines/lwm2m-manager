@@ -56,6 +56,7 @@ public class DeviceDetailsServlet extends HttpServlet {
       objects.add(new DataObject(o, objectModel.version , objectModel.name, objectModel.description, instances));
     }
 
+    templateMap.put("reg", registration);
     templateMap.put("objects", objects);
     templateEngine.render("device-details.jte", templateMap, new PrintWriterOutput(resp.getWriter()));
 

@@ -3,3 +3,8 @@ database.db
 jte-classes/
 .vscode/
 Californium.properties
+
+# eclipse files
+/.classpath
+/.project
+/.settings/

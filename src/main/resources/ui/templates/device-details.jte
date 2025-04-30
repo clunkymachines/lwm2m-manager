@@ -1,7 +1,9 @@
 @import java.util.List
+@import org.eclipse.leshan.server.registration.Registration
 @import com.clunkymachines.lwm2m.manager.ui.data.DataObject
 @import com.clunkymachines.lwm2m.manager.ui.data.DataObjectInstance
 @import com.clunkymachines.lwm2m.manager.ui.data.DataResource
+@param  Registration reg
 @param  List<DataObject> objects
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +14,7 @@
 @template.shared.menu()
         <div class="main">
                 <h1>Device Details</h1>
+                <div  hx-ext="sse" sse-connect="/event?ep=${reg.getEndpoint()}"> 
                 @for(var obj : objects)
                   <details>
                     <summary>${obj.name()} ${obj.id()} ${obj.version()}</summary>
@@ -35,7 +38,7 @@
                           <td>${resource.id()}</td>
                           <td>
                           @if(resource.read())
-                            <button>R</button>
+                            <button hx-swap="none" hx-get="/req?type=read&endpoint=${reg.getEndpoint()}&path=/${obj.id()}/${instance.id()}/${resource.id()}">R</button>
                           @endif
                           @if(resource.write())
                             <button>W</button>
@@ -45,7 +48,7 @@
                           @endif
                           </td>
                           <td>
-                            <div sse-swap="${obj.id()}/${instance.id()}/${resource.id()}"></div>
+                              <div sse-swap="${reg.getEndpoint()}/${obj.id()}/${instance.id()}/${resource.id()}"></div>
                           </td>
                         </tr>
                         @endfor
@@ -55,6 +58,7 @@
                   </details>
                   <hr />
                 @endfor
+                </div>
         </div>
     </div>
 </body>

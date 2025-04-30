@@ -25,7 +25,7 @@ public class SecurityStoreService implements SecurityStore {
 
   @Override
   public SecurityInfo getByIdentity(String pskIdentity) {
-    var device = deviceRepository.get(pskIdentity);
+    var device = deviceRepository.getByPskIdentity(pskIdentity);
     if (device == null) {
       return null;
     } else {
